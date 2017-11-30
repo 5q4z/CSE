@@ -1,3 +1,4 @@
+import random
 # print("Hello World")
 #
 # # Logan Yang
@@ -23,8 +24,8 @@
 # print("I have a car called the %s. It's a %s" % (car_name, car_type))
 #
 # # asking for input
-# name_1 + input("What is your name? ")  # In python 3, it is just called input()
-# age_1 + input("How old are you? ")
+# name + input("What is your name? ")  # In python 3, it is just called input()
+# age + input("How old are you? ")
 # print("Wow, %s years old, that's REALLY old!" % age)
 
 # Functions
@@ -79,3 +80,28 @@ def grade_calc(percentage):
         return "D"
     elif percentage < 60:
         return "F"
+
+
+def happy_bday(name):
+    print("Happy birthday to you" + ",")
+    print("Happy birthday to you" + ",")
+    print("Happy birthday dear %s," % name)
+    print("Happy birthday to you" + ".")
+
+
+happy_bday("John")
+
+
+# Loops
+
+for num in range(10):
+    print(num + 1)
+
+
+a = 1
+while a < 10:
+    print(a)
+    a += 1
+
+
+print(random.randint(0, 100))
