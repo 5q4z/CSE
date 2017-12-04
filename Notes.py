@@ -42,7 +42,7 @@ print_hw()
 
 def say_hi(name):  # name is a parameter
     print("Hello %s." % name)
-    print("Enjoy you day.")
+    print("Enjoy your day.")
 
 
 say_hi("John")
@@ -105,3 +105,17 @@ while a < 10:
 
 
 print(random.randint(0, 100))
+
+
+print(1 == 1)
+print(1 != 2)
+print(10 <= 15)
+print(not False)
+
+# Recasting
+c = '1'
+print(c == 1)
+print(int(c) == 1)  # Both are ints
+print(c == str(1))  # Both are strings
+
+# The input command ALWAYS gives a string
