@@ -1,11 +1,11 @@
 import random
 # Logan Yang
 
-number = (random.randint(0, 50))
-input("What number am I thinking of? ")
-if input == number:
-    print("Correct")
-elif input <= number:
-    print("Incorrect, guess higher")
-elif input >= number:
-    print("Incorrect, guess lower")
+a = (random.randint(1, 50))
+b = input("What number am I thinking of? ")
+if b == str(a):
+    print("Correct! Good job.")
+elif b < str(a):
+    print("Incorrect, guess higher.")
+elif b > str(a):
+    print("Incorrect, guess lower.")
