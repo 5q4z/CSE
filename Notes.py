@@ -96,7 +96,7 @@ happy_bday("John")
 
 for num in range(10):
     print(num + 1)
-3
+
 
 a = 1
 while a < 10:
