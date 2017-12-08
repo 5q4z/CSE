@@ -3,7 +3,6 @@ import random
 
 a = (random.randint(1, 50))
 
-
 for x in range(5):
     b = input("What number am I thinking of? ")
     if b == str(a):

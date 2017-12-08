@@ -44,3 +44,11 @@ def repeat(string):
 
     for x in range(3):
         print(string)
+
+# 12.8.17
+
+
+def date(month, day, year):
+    print(month + "/" + day + "/" + year)
+
+date("12", "8", "2017")
