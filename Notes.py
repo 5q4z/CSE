@@ -1,34 +1,35 @@
+'''
 import random
-# print("Hello World")
-#
-# # Logan Yang
-#
-# print(3 + 5)
-# print(5 - 3)
-# print(3 * 5)
-# print(6 / 2)
-#
-# print(3 ** 2)
-#
-# # this makes a new line. In python 3.6, it looks like print()
-# print("See if you can figure this out")
-# print(13 % 12)
-#
-# car_name = "Wiebe Mobile"
-# car_type = "Tesla"
-# car_cylinders = 8
-# car_mpg = 9000.1
-#
-# # Inline printing
-# print("I have a car called the %s" % car_name)
-# print("I have a car called the %s. It's a %s" % (car_name, car_type))
-#
-# # asking for input
-# name + input("What is your name? ")  # In python 3, it is just called input()
-# age + input("How old are you? ")
-# print("Wow, %s years old, that's REALLY old!" % age)
+print("Hello World")
 
-# Functions
+# Logan Yang
+
+print(3 + 5)
+print(5 - 3)
+print(3 * 5)
+print(6 / 2)
+
+print(3 ** 2)
+
+# this makes a new line. In python 3.6, it looks like print()
+print("See if you can figure this out")
+print(13 % 12)
+
+car_name = "Wiebe Mobile"
+car_type = "Tesla"
+car_cylinders = 8
+car_mpg = 9000.1
+
+# Inline printing
+print("I have a car called the %s" % car_name)
+print("I have a car called the %s. It's a %s" % (car_name, car_type))
+
+# asking for input
+name + input("What is your name? ")  # In python 3, it is just called input()
+age + input("How old are you? ")
+print("Wow, %s years old, that's REALLY old!" % age)
+
+Functions
 
 
 def print_hw():
@@ -117,5 +118,35 @@ c = '1'
 print(c == 1)
 print(int(c) == 1)  # Both are ints
 print(c == str(1))  # Both are strings
+'''
 
 # The input command ALWAYS gives a string
+
+
+# Lists
+the_count = [1, 2, 3, 4, 5]
+shopping_list = ["Noodles", "Egg rolls", "Milk", "Rice", "Soda", "Chips"]
+print(shopping_list[2])
+print(len(shopping_list))
+
+# Going through a list
+for item in shopping_list:
+    print(item)
+
+for num in the_count:
+    print(num * 2)
+
+len(shopping_list)  # Gives me the length of the shopping list
+range(3)  # Gives a list of the numbers 0 through 2
+range(len(shopping_list))  # A list of EVERY index in a list
+
+for num in range(len(shopping_list)):
+    item = shopping_list[num]
+    print("The item at index %d is %s" % (num, item))
+
+# Turn things into a list
+str1 = "Hello Class!"
+listOne = list(str1)
+print(listOne)
+listOne[11] = '.'
+print(listOne)
