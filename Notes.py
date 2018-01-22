@@ -1,3 +1,4 @@
+import string
 '''
 import random
 print("Hello World")
@@ -118,10 +119,10 @@ c = '1'
 print(c == 1)
 print(int(c) == 1)  # Both are ints
 print(c == str(1))  # Both are strings
-'''
+
 
 # The input command ALWAYS gives a string
-
+'''
 
 # Lists
 the_count = [1, 2, 3, 4, 5]
@@ -144,9 +145,32 @@ for num in range(len(shopping_list)):
     item = shopping_list[num]
     print("The item at index %d is %s" % (num, item))
 
+
 # Turn things into a list
 str1 = "Hello Class!"
 listOne = list(str1)
 print(listOne)
 listOne[11] = '.'
 print(listOne)
+print("".join(listOne))
+
+# Add things to a list
+shopping_list.append("Cereal, " "Cheese")
+print(shopping_list)
+
+# Removing things from a list
+shopping_list.remove("Soda")
+print(shopping_list)
+shopping_list.pop(0)
+print(shopping_list)
+
+# The string class
+print(string.ascii_letters)
+print(string.ascii_lowercase)
+print(string.punctuation)
+print(string.digits)
+
+# Dealing with strings
+strTwo = "ThIs Is A vEry Odd SEntEncE"
+lowercase = strTwo.lower()
+print(lowercase)
