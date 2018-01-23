@@ -13,12 +13,29 @@ word_bank = ["Seoul Dynasty", "Dallas Fuel", "London Spitfire", "San Francisco S
              "Philadelphia Fusion", "Shanghai Dragons"]
 correct = False
 lives = 10
+letters_guessed = ""
+start = True
 while lives > 0 and correct is False:
-    random.shuffle(word_bank)
-    word = word_bank
-    print(list(word))
-    guess = input("Guess a letter. ")
-    if guess != list(word):
-        lives -= 1
-    elif guess == list(word):
+    if start == True:
+        range(1)
+        random.shuffle(word_bank)
+        word = word_bank.pop(0)
+        word = (list(word))
+        length = len(word)
+        print(length)
+        print(word)
+        guess = input("Guess a letter, the word is %s letters long. " % length)
+        start = False
+    if guess == letters_guessed:
+        print("You already guessed that letter.")
+    if guess == list(word):
         guess += list(word)
+        guess += letters_guessed
+    elif guess != list(word):
+        lives -= 1
+        guess += letters_guessed
+    if guess == word:
+        correct = True
+        print("You got the word correct! The word was %s." % word)
+    print(guess)
+    print("You have %s guesses left" % lives)
