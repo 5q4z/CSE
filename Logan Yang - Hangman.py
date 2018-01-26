@@ -17,21 +17,27 @@ letters_guessed = []
 random.shuffle(word_bank)
 word = word_bank.pop(0)
 word = (list(word))
+print(word)
 length = len(word)
 while lives > 0 and correct is False:
-    print(word)
+    output = []
+    for letter in word:
+        if letter in letters_guessed:
+            output.append(letter)
+            print("You already guessed that letter.")
+        else:
+            output.append("*")
+    print(output)
     guess = input("Guess a letter, the word is %s letters long. " % length)
-    if guess == letters_guessed:
-        print("You already guessed that letter.")
-    for index in range(len(word)):
-        guess += word
-        print(guess.join(word))
+    if guess == list(word):
+        guess += list(word)
+        guess += letters_guessed
+    elif guess != list(word):
+        lives -= 0
         letters_guessed.append(guess)
-    elif guess != word:
-        lives -= 1
-        letters_guessed.append(guess)
-    elif guess == word:
+    if guess == word:
         correct = True
         print("You got the word correct! The word was %s." % word)
-    print(guess)
     print("You have %s guesses left" % lives)
+    if lives == 0:
+        print("You lost, but you can always try again.")
