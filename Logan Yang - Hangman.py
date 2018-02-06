@@ -16,21 +16,23 @@ letters_guessed = []
 random.shuffle(word_bank)
 word = word_bank.pop(0)
 word = (list(word))
-print(word)
+print("".join(word))
 length = len(word)
 while lives > 0:
     output = []
     for letter in word:
         if letter in letters_guessed:
             output.append(letter)
-            print("Guess again.")
         else:
             output.append("*")
-    print(output)
-    guess = input("Guess a letter, the word is %s letters long. " % length)
-    if guess == word:
+            lives + 1
+    print("".join(output))
+    output = input("Guess a letter, the word is %s letters long. " % length)
+    if output == word:
         print("You got the word correct! The word was %s." % word)
         exit(0)
     print("You have %s guesses left" % lives)
     if lives == 0:
         print("You are out of guesses, try again.")
+        exit(0)
+    lives -= 1

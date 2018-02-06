@@ -122,7 +122,7 @@ print(c == str(1))  # Both are strings
 
 
 # The input command ALWAYS gives a string
-'''
+
 
 # Lists
 the_count = [1, 2, 3, 4, 5]
@@ -174,3 +174,84 @@ print(string.digits)
 strTwo = "ThIs Is A vEry Odd SEntEncE"
 lowercase = strTwo.lower()
 print(lowercase)
+'''
+
+# Dictionaries
+dictionary = {'name': 'Lance', 'age': 23, 'height': 5 * 12 + 7}
+
+# Accessing
+print(dictionary['name'])
+print(dictionary['age'])
+print(dictionary['height'])
+
+# Adding to a dictionary
+dictionary['weight'] = 280
+print(dictionary)
+
+large_dictionary = {
+    'CA': 'California',
+    'FL': 'Florida',
+    'OH': "Ohio"
+}
+
+print(large_dictionary['FL'])
+
+larger_dictionary = {
+    'CA': [
+        "Fresno",
+        "Sacramento",
+        "Los Angeles"
+    ],
+    'FL': [
+        "Tempa",
+        "Orlando",
+        "Miami"
+    ],
+    'OH': [
+        "Cleveland",
+        "Cincinnati",
+    ]
+}
+
+print(larger_dictionary['FL'])
+print(larger_dictionary['FL'][2])
+print(larger_dictionary['OH'][1])
+
+largest_dictionary = {
+    'CA': {
+        'NAME': 'California',
+        'POPULATION': 39250000,
+        'BORDER ST': [
+            'Oregon',
+            'Nevada',
+            'Arizona'
+        ]
+    },
+    'AZ': {
+        'NAME': 'Arizona',
+        'POPULATION': 6931000,
+        'BORDER ST': [
+            'California',
+            'Utah',
+            'Nevada',
+            'New Mexico'
+        ]
+    },
+    'NY': {
+        'NAME': "New York",
+        'POPULATION': 19750000,
+        'BORDER ST': [
+            'Vermont',
+            'Massachusetts',
+            'Connecticut',
+            'Pennsylvania',
+            'New Jersey'
+        ]
+    }
+}
+
+current_node = largest_dictionary['CA']
+print(current_node)
+print(current_node['NAME'])
+print(current_node['POPULATION'])
+
