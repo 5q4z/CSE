@@ -143,7 +143,7 @@ world_map = {
     'FROZEN': {
         'NAME': "Frozen Cave",
         'DESCRIPTION': "It's extremely cold, and there is a frozen gauntlet on a pedestal. You may be able to melt it "
-                       "with some fire. The only exit is where you came from",
+                       "with some fire. The only exit is where you came from.",
         'PATHS': {
             'SOUTH': 'COOL'
         }
@@ -159,16 +159,25 @@ world_map = {
     },
     'TREEONE': {
         'NAME': "Great Tree (Floor One)",
-        'DESCRIPTION': "The first level of the the Great Tree. You must defeat the magical plant to go to the next"
-                       " floor. There is a hole in the ground, and a vine ladder leading to the next level",
+        'DESCRIPTION': "The first level of the the Great Tree. There is a hole in the ground, and a vine ladder leading"
+                       " to the next level",
         'PATHS': {
             'UP': 'TREETWO',
             'DOWN': 'TORCH'
         }
     },
     'TREETWO': {
+        'NAME': "Great Tree (Floor Two)",
+        'DESCRIPTION': "The second level of the Great Tree. A vine ladder continues even higher, to the third floor.",
+        'PATHS': {
+            'DOWN': 'TREEONE',
+            'UP': 'BOSS'
+        }
+    },
+    'TREETHREE': {
         'NAME': "Great Tree (Floor Three)",
-        'DESCRIPTION': "The second level of the Great Tree. A vine ladder continues even higher, to the third floor",
+        'DESCRIPTION': "The third level of the Great Tree. A vine ladder continues even higher, to the fourth floor. "
+                       "A sign reads, BEWARE OF MONSTERS!!!",
         'PATHS': {
             'DOWN': 'TREETWO',
             'UP': 'BOSS'
@@ -180,12 +189,12 @@ world_map = {
                        "Retrieve it's eye, and you may be able to open the lock, and get to the treasure. The treasure "
                        "room is locked with a keyhole to the north.",
         'PATHS': {
-            'NORTH': 'TRESURE',
+            'NORTH': 'TREASURE',
             'DOWN': 'TREETHREE'
         }
     },
     'TREASURE': {
-        'NAME': "Great Tree Tresure Room",
+        'NAME': "Great Tree Treasure Room",
         'DESCRIPTION': "In front of you lies the Great Tree's Treasure, the Amulet of the Green Dragon. It is now yours"
                        "to keep, but beware, it may bring an evil curse with it...",
         'PATHS': {
