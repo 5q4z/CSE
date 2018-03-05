@@ -1,4 +1,3 @@
-import string
 '''
 import random
 print("Hello World")
@@ -174,7 +173,7 @@ print(string.digits)
 strTwo = "ThIs Is A vEry Odd SEntEncE"
 lowercase = strTwo.lower()
 print(lowercase)
-'''
+
 
 # Dictionaries
 dictionary = {'name': 'Lance', 'age': 23, 'height': 5 * 12 + 7}
@@ -254,4 +253,51 @@ current_node = largest_dictionary['CA']
 print(current_node)
 print(current_node['NAME'])
 print(current_node['POPULATION'])
+'''
 
+# Defining functions
+
+
+def hello_world():
+    print("Hello World!")
+
+
+hello_world()
+
+
+def square_it(number):
+    return number ** 2
+
+
+print(square_it(3))
+
+
+def tip_calc(subtotal):
+    tax_amt = subtotal = 0.18  # tax_amt CANNOT be used outside of the def.
+    return tax_amt
+
+
+def total_bill(bill_amt):
+    total = bill_amt + tip_calc(bill_amt)
+    print("Your total bill is %d" % total)
+
+
+total_bill(100)
+
+
+def distance(x1, y1, x2, y2):
+    inside = (x2 - x1) ** 2 + (y2 - y1) ** 2
+    answer = inside ** 0.5  # This is a square root
+    return answer
+
+
+print(distance(0, 0, 3, 4))
+
+
+def pythagorean(a, b):
+    c1 = (a ** 2 + b ** 2)
+    c2 = (c1 ** 0.5)
+    return c2
+
+
+print(pythagorean(5, 12))

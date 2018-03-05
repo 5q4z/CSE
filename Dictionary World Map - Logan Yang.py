@@ -20,7 +20,7 @@ world_map = {
     },
     'SHOP': {
         'NAME': "Old Man's Shop",
-        'DESCRIPTION': "An old wooden plank is on the ground, and it seems to be able to function as a shield. "
+        'DESCRIPTION': "An old wooden plank is on the ground, and it seems to serve no use, but may come in handy. "
                        "There are two exits to the north and the south.",
         'PATHS': {
             'NORTH': 'NORTHVILLAGE',
@@ -177,7 +177,7 @@ world_map = {
     'TREETHREE': {
         'NAME': "Great Tree (Floor Three)",
         'DESCRIPTION': "The third level of the Great Tree. A vine ladder continues even higher, to the fourth floor. "
-                       "A sign reads, BEWARE OF MONSTERS!!!",
+                       "A sign reads, 'BEWARE OF MONSTERS!!!'",
         'PATHS': {
             'DOWN': 'TREETWO',
             'UP': 'BOSS'
@@ -195,8 +195,8 @@ world_map = {
     },
     'TREASURE': {
         'NAME': "Great Tree Treasure Room",
-        'DESCRIPTION': "In front of you lies the Great Tree's Treasure, the Amulet of the Green Dragon. It is now yours"
-                       "to keep, but beware, it may bring an evil curse with it...",
+        'DESCRIPTION': "In front of you lies the Great Tree's Treasure, the Amulet of the Forest Spirit. It is now "
+                       "yours to keep, but beware, it may bring an evil curse with it...",
         'PATHS': {
             'SOUTH': 'BOSS'
         }
