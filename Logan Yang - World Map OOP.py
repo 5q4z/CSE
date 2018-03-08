@@ -1,4 +1,3 @@
-
 class Room(object):
     def __init__(self, name, north, south, east, west, up, down, description):
         self.name = name
@@ -56,7 +55,7 @@ ogre = Room("Ogre Cave", "cave", None, None, "dark_cave", None, None,
             "north")
 cave = Room("Cave", None, "ogre", None, "icy_forest", None, None,
             "A dead body rots on the floor, and you feel a chill go down your spine. You get colder from "
-            "the entrance to the west.")
+            "the exit to the west.")
 icy_forest = Room("Icy Forest", "frozen_keep", None, "cave", None, None, None,
                   "It's very cold, and frozen bodies lie on the floor. The source of the ice is probably from the keep "
                   "to the north, which is said to hold a very powerful weapon.")
