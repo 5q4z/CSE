@@ -27,17 +27,30 @@ class Character(object):
         elif self.health < 0:
             print("Your enemy is dead.")
 
+    def take_hit(self):
+        self.take_damage = True
+        self.health = self.health - 1
+        print("You take damage.")
+        if self.health == 0:
+            print("You have died. GAME OVER.")
+            quit()
+
     def movement(self):
         self.move = True
         print("The enemy moves!")
         self.move = False
 
+    def status(self):
+        print("%s/3 health left" % self.health)
 
-monster = Character("Troll", "A big, bad troll.", 5, False)
+
+you = Character("You", "It's you, what else do you need to know?", 3, False)
+monster = Character("Troll", "A big, bad troll.", 2, False)
 monster.interaction()
+you.interaction()
 monster.movement()
 monster.hit()
 monster.hit()
-monster.hit()
-monster.hit()
-monster.hit()
+you.take_hit()
+you.take_hit()
+you.status()
