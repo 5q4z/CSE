@@ -1,20 +1,20 @@
 class Character(object):
     def __init__(self, name, description, health, move):
         self.name = name
-        self.interact = False
+        self.interaction = False
         self.alive = True
         self.description = description
         self.attack = False
         self.take_damage = False
         self.health = health
-        self.move = move
+        self.movement = move
 
-    def interaction(self):
-        self.interact = True
+    def interact(self):
+        self.interaction = True
         print(self.name)
         print(self.description)
         print(self.health)
-        self.interact = False
+        self.interaction = False
 
     def hit(self):
         self.take_damage = True
@@ -35,10 +35,10 @@ class Character(object):
             print("You have died. GAME OVER.")
             quit()
 
-    def movement(self):
-        self.move = True
+    def move(self):
+        self.movement = True
         print("The enemy moves!")
-        self.move = False
+        self.movement = False
 
     def status(self):
         print("%s/3 health left" % self.health)
@@ -46,11 +46,12 @@ class Character(object):
 
 you = Character("You", "It's you, what else do you need to know?", 3, False)
 monster = Character("Troll", "A big, bad troll.", 2, False)
-monster.interaction()
-you.interaction()
+monster.interact()
+you.interact()
 monster.movement()
 monster.hit()
 monster.hit()
+you.take_hit()
 you.take_hit()
 you.take_hit()
 you.status()
