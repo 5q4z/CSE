@@ -7,11 +7,184 @@ class Room(object):
         self.west = west
         self.up = up
         self.down = down
+        self.lock = True
         self.description = description
 
     def move(self, direction):
         global current_node
         current_node = globals()[getattr(self, direction)]
+
+
+class Character(object):
+    def __init__(self, name, description, health, move, attack, defense):
+        self.name = name
+        self.alive = True
+        self.description = description
+        self.attack = False
+        self.take_damage = False
+        self.health = health
+        self.movement = move
+        self.attack = attack
+        self.defense = defense
+
+    def interact(self):
+        print(self.name)
+        print(self.description)
+        print(self.health)
+
+    def hit(self):
+        self.take_damage = True
+        self.health = self.health - 1
+        print("You hit the enemy.")
+        print(self.health)
+        if self.health == 0:
+            print("The enemy dies.")
+            self.alive = False
+        elif self.health < 0:
+            print("Your enemy is dead.")
+        self.take_damage = False
+
+    def take_hit(self):
+        self.take_damage = True
+        self.health = self.health - 1
+        print("You take damage.")
+        if self.health == 0:
+            print("You have died. GAME OVER.")
+            quit()
+
+    def move(self):
+        self.movement = True
+        print("The enemy moves!")
+        self.movement = False
+
+    def status(self):
+        print("%s/5 health left" % self.health)
+
+
+class Item(object):
+    def __init__(self, name, description):
+        self.name = name
+        self.description = description
+
+
+class Weapon(Item):
+    def __init__(self, name, description, damage, ability, attack_type):
+        super(Weapon, self).__init__(name, description)
+        self.damage = damage
+        self.ability = ability
+        self.attack_type = attack_type
+
+
+class Sword(Weapon):
+    def __init__(self, name, description, damage, ability, melee):
+        super(Sword, self).__init__(name, description, damage, ability, melee)
+        self.attack_type = melee
+
+
+class Bow(Weapon):
+    def __init__(self, name, description, damage, ability, ranged):
+        super(Bow, self).__init__(name, description, damage, ability, ranged)
+        self.attack_type = ranged
+
+
+class Gauntlet(Weapon):
+    def __init__(self, name, description, damage, ability, melee):
+        super(Gauntlet, self).__init__(name, description, damage, ability, melee)
+
+
+class Bomb(Weapon):
+    def __init__(self, name, description, damage, ability, ranged):
+        super(Bomb, self).__init__(name, description, damage, ability, ranged)
+
+
+class Consumable(Item):
+    def __init__(self, name, description):
+        super(Consumable, self).__init__(name, description)
+        self.use = False
+        self.amount = 0
+
+    def obtain(self):
+        self.amount = self.amount + 1
+        print("You have obtained a %s" % self.name)
+
+
+class HP_Potion(Consumable):
+    def __init__(self):
+        super(HP_Potion, self).__init__("Healing Potion", "A potion the will restore 3 HP.")
+
+    def use(self):
+        self.use = True
+        self.health = self.health + 3
+        self.amount = self.amount - 1
+        print("You have used a health potion.")
+        self.use = False
+
+
+class Heart_Container(Consumable):
+    def __init__(self):
+        super(Heart_Container, self).__init__("Heart Container", 
+                                              "A heart container, which permanently increases your maximum health.")
+
+    def use(self):
+        self.use = True
+        self.health = self.health + 5
+        self.amount = self.amount - 1
+        print("Your health has been upgraded by 5 points!")
+        self.use = False
+
+
+class Atk_Potion(Consumable):
+    def __init__(self):
+        super(Atk_Potion, self).__init__("Attack Potion", "A potion that permanently increases your attack by one.")
+
+    def use(self):
+        self.use = True
+        self.attack = self.attack + 1
+        print("Your attack has been permanently upgraded by 1!")
+        self.use = False
+
+
+class Def_Potion(Consumable):
+    def __init__(self):
+        super(Def_Potion, self).__init__("Defense Potion", 
+                                         "A potion that permanently decreases the damage you receive by one.")
+
+    def use(self):
+        self.use = True
+        self.defense = self.defense + 1
+        print("Your defense has been permanently upgraded by 1!")
+
+
+class Key_Item(Item):
+    def __init__(self, name, description):
+        super(Key_Item, self).__init__(name, description)
+
+
+class Key(Key_Item):
+    def __init__(self):
+        super(Key, self).__init__("Key", "A key, it may be used for something, but it's a little rusty.")
+
+    def unlock(self):
+        self.lock = False
+        print("You have unlocked the door.")
+
+
+class Torch(Key_Item):
+    def __init__(self):
+        super(Torch, self).__init__("Torch", "A very warm torch, and may be of some use in colder weather.")
+
+
+class Gohma_Eye(Key_Item):
+    def __init__(self):
+        super(Gohma_Eye, self).__init__("Gohma's Eye",
+                                        "The eye of the Forest Spider, Gohma, and may hold some hidden treasures.")
+
+
+class Tree_Treasure(Key_Item):
+    def __init__(self):
+        super(Tree_Treasure, self).__init__("The Great Tree's Amulet",
+                                            "The amulet of The Great Tree, and is said to be the creator of the "
+                                            "forests. Intense aura emits from the bottom of the amulet.")
 
 
 # Initialize Rooms
