@@ -7,7 +7,6 @@ class Character(object):
         self.alive = True
         self.description = description
         self.attack = False
-        self.take_damage = False
         self.player_health = player_health
         self.enemy_health = enemy_health
         self.max_health = max_health
@@ -20,7 +19,6 @@ class Character(object):
         print(self.enemy_health)
 
     def hit(self):
-        self.take_damage = True
         self.enemy_health = self.enemy_health - 1
         print("You hit the enemy.")
         print(self.enemy_health)
@@ -29,15 +27,18 @@ class Character(object):
             self.alive = False
         elif self.enemy_health < 0:
             print("Your enemy is dead.")
-        self.take_damage = False
 
     def take_hit(self):
-        self.take_damage = True
         self.player_health = self.player_health - 1
         print("You take damage.")
         if self.player_health == 0:
             print("You have died. GAME OVER.")
             quit()
+
+    def equip(self):
+        equip = input("What do you want to equip? ")
+        if equip in inventory:
+            self.attack = self.attack + self.damage
 
     def status(self):
         print("%s/%s health left" % (self.player_health, self.max_health))
@@ -82,9 +83,6 @@ class Sword(Weapon):
         super(Sword, self).__init__(name, description, damage, ability, melee)
         self.attack_type = melee
 
-    def equip(self):
-        self.attack = self.damage + self.attack
-
     def attack(self):
         print("You attack.")
         self.enemy_health = self.enemy_health - self.damage
@@ -95,9 +93,6 @@ class Bow(Weapon):
         super(Bow, self).__init__(name, description, damage, ability, ranged)
         self.attack_type = ranged
 
-    def equip(self):
-        self.attack = self.damage + self.attack
-
     def attack(self):
         print("You attack the enemy.")
         self.enemy_health = self.enemy_health - self.damage
@@ -107,9 +102,6 @@ class Gauntlet(Weapon):
     def __init__(self, name, description, damage, ability, melee):
         super(Gauntlet, self).__init__(name, description, damage, ability, melee)
 
-    def equip(self):
-        self.attack = self.damage + self.attack
-
     def attack(self):
         print("You attack.")
         self.enemy_health = self.enemy_health - self.damage
@@ -118,9 +110,6 @@ class Gauntlet(Weapon):
 class Bomb(Weapon):
     def __init__(self, name, description, damage, ability, ranged):
         super(Bomb, self).__init__(name, description, damage, ability, ranged)
-
-    def equip(self):
-        self.attack = self.damage + self.attack
 
     def attack(self):
         print("You attack.")
@@ -177,7 +166,7 @@ class AtkPotion(Consumable):
 class DefPotion(Consumable):
     def __init__(self):
         super(DefPotion, self).__init__("Defense Potion",
-                                         "A potion that permanently decreases the damage you receive by one.")
+                                        "A potion that permanently decreases the damage you receive by one.")
 
     def use(self):
         self.use = True
@@ -207,7 +196,7 @@ class Torch(KeyItem):
     def unlock(self):
         if Torch in inventory:
             self.lock2 = False
-            print("The ice on the door melts")
+            print("The ice on the door melts.")
 
 
 class GohmaEye(KeyItem):
@@ -274,21 +263,22 @@ cave = Room("Cave", None, "ogre", None, "icy_forest", None, None,
             "A dead body rots on the floor, and you feel a chill go down your spine. You get colder from "
             "the exit to the west.")
 icy_forest = Room("Icy Forest", "frozen_keep", None, "cave", None, None, None,
-                  "It's very cold, and frozen bodies lie on the floor. The source of the ice is probably from the keep "
-                  "to the north, which is said to hold a very powerful weapon.")
-frozen_keep = Room("Frozen Keep", None, "icy_forest", None, None, None, None,
+                  "It's very cold, and frozen bodies lie on the floor. The source of the ice is probably from the "
+                  "fortress to the north, which is said to hold a very powerful weapon.")
+frozen_keep = Room("Frozen Fortress", None, "icy_forest", None, None, None, None,
                    "It's extremely cold, and there is a frozen gauntlet on a pedestal. You may be able to melt it "
                    "with some fire. The only exit is where you came from.")
 gt_entrance = Room("Great Tree Entrance", None, None, "dark_cave", "gt_level_one", None, None,
                    "In front of you lies the Great Tree, the god of the forest people. The gate of the great "
                    "tree is open for you to claim the treasure for the fallen forest people.")
 gt_level_one = Room("Great Tree (Floor One)", None, None, None, None, "gt_level_two", "torch",
-                    "The first level of the the Great Tree. There is a hole in the ground, and a vine ladder leading "
+                    "The first floor of the the Great Tree. There is a hole in the ground, and a vine ladder leading "
                     "to the next level")
-gt_level_two = Room("Great Tree (Level Two)", None, None, None, None, "gt_level_three", "gt_level_one",
-                    "The second level of the Great Tree. A vine ladder continues even higher, to the third floor.")
-gt_level_three = Room("Great Tree (Level Three)", None, None, None, None, "lair", "gt_level_two",
-                      "The third level of the Great Tree. A vine ladder continues even higher, to the fourth floor. "
+gt_level_two = Room("Great Tree (Floor Two)", None, None, None, None, "gt_level_three", "gt_level_one",
+                    "The second floor of the Great Tree. A vine ladder continues higher up the tree, to the third "
+                    "floor.")
+gt_level_three = Room("Great Tree (Floor Three)", None, None, None, None, "lair", "gt_level_two",
+                      "The third floor of the Great Tree. A vine ladder continues even higher, to the fourth floor. "
                       "A sign reads, 'BEWARE OF MONSTERS!!!'")
 lair = Room("Gohma's Lair", "great_tree_treasures", None, None, None, "tree_house", "gt_level_three",
             "The last thing that stands between you and the forest treasure is the forest spider, 'Gohma'. "
@@ -301,15 +291,23 @@ great_tree_treasures = Room("Great Tree Treasures", None, "lair", None, None, No
 
 directions = ['north', 'south', 'east', 'west', 'up', 'down']
 short_directions = ['n', 's', 'e', 'w', 'u', 'd']
-current_node = tree_house
-player = Character("You", "It's you, what else do you need to know?", 5, None, 5, 1, 1)
+player = Character("You", "It's you, what else do you need to know?", 10, None, 10, 1, 1)
+ogre1 = Character("Ogre", "A big, bad ogre, that is hostile to nearly everything.", None, 10, 10, 3, 3)
+goblin = Character("Goblin", "A small goblin, with no common sense.", None, 5, 5, 1, 0)
+sapling = Character("Sapling", "A small sapling. It has sharp vines that are dangerous.", None, 8, 8, 5, 1)
+fire = Character("Fire Elemental", "A small fire elemental, that hasn't grown enough to be strong.", None, 5, 5, 3, 5)
+ghoul = Character("Ghoul", "A disgusting ghoul, that isn't afraid to attack.", None, 12, 12, 7, 0)
+boss = Character("Gohma", "The guardian of the Tree's Treasure, and the only thing that stand in your way now.", None,
+                 30, 30, 10, 5)
 sword = Sword("Iron sword", "A durable, iron sword.", 3, None, None)
 gt_sword = Sword("Great Tree Sword", "The weapon of the Great Tree.", 5, TreeTreasure, None)
 bow = Bow("Magic Bow", "A bow. It's doesn't require arrows, and can shoot without them.", 3, None, None)
 gauntlet = Gauntlet("Powerless Gauntlet", "A gauntlet that holds no power.", 2, None, None)
 f_gauntlet = Gauntlet("Fire Gauntlet", "The gauntlet, infused with the element of fire.", 8, Torch, None)
-bomb = Bomb("Nature Bomb", "A bomb infused with the essence of nature. It regrows easily, which means it will come "
+bomb = Bomb("Nature Bomb", "A bomb, infused with the essence of nature. It regrows easily, which means it will come "
                            "back after using it.", 8, None, None)
+treasures = TreeTreasure
+current_node = tree_house
 
 while True:
     print(current_node.name)

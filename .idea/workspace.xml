@@ -14,8 +14,8 @@
       <file leaf-file-name="Notes.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Notes.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="194">
-              <caret line="23" column="46" lean-forward="true" selection-start-line="23" selection-start-column="46" selection-end-line="23" selection-end-column="46" />
+            <state relative-caret-position="391">
+              <caret line="23" column="46" lean-forward="false" selection-start-line="23" selection-start-column="46" selection-end-line="23" selection-end-column="46" />
               <folding />
             </state>
           </provider>
@@ -34,18 +34,8 @@
       <file leaf-file-name="Logan Yang - CYOA.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Logan Yang - CYOA.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="209">
-              <caret line="96" column="0" lean-forward="true" selection-start-line="96" selection-start-column="0" selection-end-line="96" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Dictionary World Map - Logan Yang.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Dictionary World Map - Logan Yang.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="29" lean-forward="false" selection-start-line="2" selection-start-column="29" selection-end-line="2" selection-end-column="29" />
+            <state relative-caret-position="465">
+              <caret line="307" column="65" lean-forward="true" selection-start-line="307" selection-start-column="65" selection-end-line="307" selection-end-column="65" />
               <folding />
             </state>
           </provider>
@@ -64,7 +54,7 @@
       <file leaf-file-name="Logan Yang - Characters.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Logan Yang - Characters.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="549">
+            <state relative-caret-position="697">
               <caret line="41" column="0" lean-forward="false" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
               <folding />
             </state>
@@ -99,9 +89,9 @@
         <option value="$PROJECT_DIR$/Class Notes.py" />
         <option value="$PROJECT_DIR$/Logan Yang - Characters.py" />
         <option value="$PROJECT_DIR$/Programmer  -  Logan Yang.py" />
-        <option value="$PROJECT_DIR$/Notes.py" />
         <option value="$PROJECT_DIR$/Logan Yang - World Map OOP.py" />
         <option value="$PROJECT_DIR$/Inheritance Notes.py" />
+        <option value="$PROJECT_DIR$/Notes.py" />
         <option value="$PROJECT_DIR$/Logan Yang - CYOA.py" />
       </list>
     </option>
@@ -573,26 +563,10 @@
     <entry file="file://$PROJECT_DIR$/Pythagorean.py" />
     <entry file="file://$PROJECT_DIR$/Characters.py" />
     <entry file="file://$PROJECT_DIR$/Programmer  -  Logan Yang.py" />
-    <entry file="file://$PROJECT_DIR$/Dictionary World Map - Logan Yang.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="29" lean-forward="false" selection-start-line="2" selection-start-column="29" selection-end-line="2" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Logan Yang - Program.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Class Notes.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="680">
-          <caret line="40" column="27" lean-forward="false" selection-start-line="40" selection-start-column="27" selection-end-line="40" selection-end-column="27" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -607,7 +581,7 @@
     <entry file="file://$PROJECT_DIR$/Inheritance Notes.py" />
     <entry file="file://$PROJECT_DIR$/Logan Yang - Characters.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="549">
+        <state relative-caret-position="697">
           <caret line="41" column="0" lean-forward="false" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
           <folding />
         </state>
@@ -615,16 +589,31 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Notes.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="194">
-          <caret line="23" column="46" lean-forward="true" selection-start-line="23" selection-start-column="46" selection-end-line="23" selection-end-column="46" />
+        <state relative-caret-position="391">
+          <caret line="23" column="46" lean-forward="false" selection-start-line="23" selection-start-column="46" selection-end-line="23" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Dictionary World Map - Logan Yang.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="2" column="29" lean-forward="false" selection-start-line="2" selection-start-column="29" selection-end-line="2" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Class Notes.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="680">
+          <caret line="40" column="27" lean-forward="false" selection-start-line="40" selection-start-column="27" selection-end-line="40" selection-end-column="27" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Logan Yang - CYOA.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="96" column="0" lean-forward="true" selection-start-line="96" selection-start-column="0" selection-end-line="96" selection-end-column="0" />
+        <state relative-caret-position="465">
+          <caret line="307" column="65" lean-forward="true" selection-start-line="307" selection-start-column="65" selection-end-line="307" selection-end-column="65" />
           <folding />
         </state>
       </provider>
