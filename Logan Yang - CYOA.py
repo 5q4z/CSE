@@ -99,7 +99,7 @@ class Bow(Weapon):
         self.attack_type = ranged
 
     def attack(self):
-        print("You attack the enemy.")
+        print("You shoot the enemy.")
         self.enemy_health = self.enemy_health - self.damage
 
 
@@ -117,7 +117,7 @@ class Bomb(Weapon):
         super(Bomb, self).__init__(name, description, damage, ability, ranged)
 
     def attack(self):
-        print("You attack.")
+        print("You throw a bomb at the enemy.")
         self.enemy_health = self.enemy_health - self.damage
 
 
@@ -325,11 +325,11 @@ boss = Character("Gohma", "The guardian of the Tree's Treasure, and the only thi
                  30, 30, 10, 5)
 sword = Sword("Iron sword", "A durable, iron sword.", 3, None, None)
 gt_sword = Sword("Great Tree Sword", "The weapon of the Great Tree.", 10, TreeTreasure, None)
-bow = Bow("Magic Bow", "A bow. It's doesn't require arrows, and can shoot without them.", 3, None, None)
+bow = Bow("Arcane Bow", "A bow. It's doesn't require arrows, and can shoot without them.", 4, None, None)
 gauntlet = Gauntlet("Powerless Gauntlet", "A gauntlet that holds no power.", 2, None, None)
 f_gauntlet = Gauntlet("Fire Gauntlet", "The gauntlet, infused with the element of fire.", 8, Torch, None)
-bomb = Bomb("Nature Bomb", "A bomb, infused with the essence of nature. It regrows easily, which means it will come "
-                           "back after using it.", 8, None, None)
+bomb = Bomb("Ivy Bomb", "A bomb, infused with the essence of nature. It regrows easily, which means it will come "
+                        "back after using it.", 8, None, None)
 healthpotion = HpPotion
 atkpotion = AtkPotion
 defpotion = DefPotion
@@ -355,3 +355,29 @@ while True:
             print("You can't go that way.")
     else:
         print("Command not recognized.")
+    if command in offense:
+        def attack(self):
+            print("You attack.")
+            self.enemy_health = self.enemy_health - (self.damage - self.defense)
+    if command in defence:
+        def confuse(self):
+            self.player_health = self.player_health + self.damage
+    if command in obtain:
+        item = inventory
+    if command in key:
+        if key in inventory:
+            def unlock(self):
+                self.lock1 = False
+                print("You have unlocked the door.")
+        if Torch in inventory:
+            def unlock(self):
+                self.lock2 = False
+                print("The ice on the door melts.")
+        if GohmaEye in inventory:
+            def unlock(self):
+                self.lock3 = False
+                print("You have unlocked the box.")
+        if TreeTreasure in inventory:
+            def unlock(self):
+                self.lock4 = False
+                print("You have unlocked the door.")
