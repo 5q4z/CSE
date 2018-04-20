@@ -1,18 +1,13 @@
-inventory = []
-key_items = []
-
-
 class Character(object):
     def __init__(self, name, description, player_health, enemy_health, max_health, attack, defense):
         self.name = name
-        self.alive = True
         self.description = description
-        self.attack = False
         self.player_health = player_health
         self.enemy_health = enemy_health
         self.max_health = max_health
         self.attack = attack
         self.defense = defense
+        self.inventory = []
 
     def interact(self):
         print(self.name)
@@ -25,7 +20,6 @@ class Character(object):
         print(self.enemy_health)
         if self.enemy_health == 0:
             print("The enemy dies.")
-            self.alive = False
         elif self.enemy_health < 0:
             print("Your enemy is dead.")
 
@@ -38,7 +32,7 @@ class Character(object):
 
     def equip(self):
         equip = input("What do you want to equip? ")
-        if equip in inventory:
+        if equip in self.inventory:
             self.attack = self.attack + self.damage
 
     def status(self):
@@ -188,20 +182,20 @@ class Key(KeyItem):
     def __init__(self):
         super(Key, self).__init__("Key", "A key, it may be used for something, but it's a little rusty.")
 
-    def unlock(self):
-        if Key in inventory:
-            self.lock1 = False
-            print("You have unlocked the door.")
+    # def unlock(self):
+    #     if Key in self.inventory:
+    #         self.lock1 = False
+    #         print("You have unlocked the door.")
 
 
 class Torch(KeyItem):
     def __init__(self):
         super(Torch, self).__init__("Torch", "A very warm torch, and may be of some use in colder weather.")
 
-    def unlock(self):
-        if Torch in inventory:
-            self.lock2 = False
-            print("The ice on the door melts.")
+    # def unlock(self):
+    #     if Torch in self.inventory:
+    #         self.lock2 = False
+    #         print("The ice on the door melts.")
 
 
 class GohmaEye(KeyItem):
@@ -209,10 +203,10 @@ class GohmaEye(KeyItem):
         super(GohmaEye, self).__init__("Gohma's Eye",
                                        "The eye of the Forest Spider, Gohma, and may hold some hidden treasures.")
 
-    def unlock(self):
-        if GohmaEye in inventory:
-            self.lock3 = False
-            print("You have unlocked the box.")
+    # def unlock(self):
+    #     if GohmaEye in self.inventory:
+    #         self.lock3 = False
+    #         print("You have unlocked the box.")
 
 
 class TreeTreasure(KeyItem):
@@ -220,9 +214,11 @@ class TreeTreasure(KeyItem):
         super(TreeTreasure, self).__init__("The Great Tree's Amulet",
                                            "The amulet of The Great Tree, and is said to be the creator of the "
                                            "forests. Intense aura emits from the bottom of the amulet.")
-        if TreeTreasure in inventory:
-            self.lock4 = False
-            print("You have unlocked the door.")
+
+    # def unlock(self):
+    #     if TreeTreasure in self.inventory:
+    #         self.lock4 = False
+    #         print("You have unlocked the door.")
 
 
 # Initialize Rooms
@@ -236,7 +232,7 @@ village = Room("Village", "north_village", "south_village", "shop", None, "tree_
                None, None, None, None)
 shop = Room("Old Man's Shop", "north_village", None, None, "village", None, None,
             "An old wooden plank is on the ground, and it seems to serve no use, but it may come in handy. There are "
-            "two exits to the north and the west.", "atkpotion", "defpotion", None, None,)
+            "two exits to the north and the west.", "atkpotion", "defpotion", "healthpotion", None,)
 north_village = Room("North of Village", None, "village", "shop", None, None, None,
                      "The north of the village. It's nice and clear, but not much else.", None, None, None, None,)
 south_village = Room("South of Village", "village", "lost_forest", None, None, None, None,
@@ -277,7 +273,7 @@ icy_forest = Room("Icy Forest", "frozen_keep", None, "cave", None, None, None,
                   "fortress to the north, which is said to hold a very powerful weapon.", None, None, None, "ghoul")
 frozen_keep = Room("Frozen Fortress", None, "icy_forest", None, None, None, None,
                    "It's extremely cold, and there is a frozen gauntlet on a pedestal. You may be able to melt it "
-                   "with some fire. The only exit is where you came from.", "gauntlet", "atkpotion", "defcontainer",
+                   "with some fire. The only exit is where you came from.", "gauntlet", "atkpotion", "defpotion",
                    "ice")
 gt_entrance = Room("Great Tree Entrance", None, None, "dark_cave", "gt_level_one", None, None,
                    "In front of you lies the Great Tree, the god of the forest people. The gate of the great "
@@ -363,21 +359,26 @@ while True:
         def confuse(self):
             self.player_health = self.player_health + self.damage
     if command in obtain:
-        item = inventory
+        self.inventory.append(self.item1)
+        self.inventory.append(self.item2)
+        self.inventory.append(self.item3)
     if command in key:
-        if key in inventory:
+        if key in self.inventory:
             def unlock(self):
                 self.lock1 = False
                 print("You have unlocked the door.")
-        if Torch in inventory:
+        if Torch in self.inventory:
             def unlock(self):
                 self.lock2 = False
                 print("The ice on the door melts.")
-        if GohmaEye in inventory:
+        if GohmaEye in self.inventory:
             def unlock(self):
                 self.lock3 = False
                 print("You have unlocked the box.")
-        if TreeTreasure in inventory:
+        if TreeTreasure in self.inventory:
             def unlock(self):
                 self.lock4 = False
                 print("You have unlocked the door.")
+    if current_node == great_tree_treasures:
+        print("You have made it! The treasure is now yours, but beware, it wasn't well protected for no reason")
+        exit(0)
