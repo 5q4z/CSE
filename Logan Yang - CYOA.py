@@ -7,7 +7,6 @@ class Character(object):
         self.max_health = max_health
         self.attack = attack
         self.defense = defense
-        self.inventory = []
 
     def interact(self):
         print(self.name)
@@ -32,7 +31,7 @@ class Character(object):
 
     def equip(self):
         equip = input("What do you want to equip? ")
-        if equip in self.inventory:
+        if equip in inventory:
             self.attack = self.attack + self.damage
 
     def status(self):
@@ -133,11 +132,11 @@ class HpPotion(Consumable):
     def use(self):
         self.use = True
         self.player_health = self.player_health + 3
-        self.max_health = self.max_health
+        player.max_health = player.max_health
         self.amount = self.amount - 1
         print("You have used a health potion.")
-        if self.player_health > self.max_health:
-            self.player_health = self.max_health
+        if player.player_health > player.max_health:
+            player.player_health = player.max_health
 
 
 class HeartContainer(Consumable):
@@ -147,7 +146,7 @@ class HeartContainer(Consumable):
 
     def use(self):
         self.use = True
-        self.max_health = self.max_health + 5
+        player.max_health = player.max_health + 5
         self.amount = self.amount - 1
         print("Your health has been upgraded by 5 points!")
 
@@ -158,7 +157,7 @@ class AtkPotion(Consumable):
 
     def use(self):
         self.use = True
-        self.attack = self.attack + 1
+        player.attack = player.attack + 1
         print("Your attack has been permanently upgraded by 1!")
 
 
@@ -169,7 +168,7 @@ class DefPotion(Consumable):
 
     def use(self):
         self.use = True
-        self.defense = self.defense + 1
+        player.defense = player.defense + 1
         print("Your defense has been permanently upgraded by 1!")
 
 
@@ -326,17 +325,22 @@ gauntlet = Gauntlet("Powerless Gauntlet", "A gauntlet that holds no power.", 2, 
 f_gauntlet = Gauntlet("Fire Gauntlet", "The gauntlet, infused with the element of fire.", 8, Torch, None)
 bomb = Bomb("Ivy Bomb", "A bomb, infused with the essence of nature. It regrows easily, which means it will come "
                         "back after using it.", 8, None, None)
+inventory = []
 healthpotion = HpPotion
 atkpotion = AtkPotion
 defpotion = DefPotion
 heartcontainer = HeartContainer
 treasures = TreeTreasure
 current_node = tree_house
-
+player_hp = 10
 while True:
     print(current_node.name)
     print(current_node.description)
     command = input('>_').lower()
+
+    if current_node.enemy == True:
+        print()
+
     if command == 'quit':
         quit(0)
     elif command in short_directions:
@@ -344,6 +348,7 @@ while True:
         pos = short_directions.index(command)
         # Change the command to be the long term
         command = directions[pos]
+
     if command in directions:
         try:
             current_node.move(command)
@@ -351,34 +356,47 @@ while True:
             print("You can't go that way.")
     else:
         print("Command not recognized.")
+
     if command in offense:
-        def attack(self):
+        def attack():
             print("You attack.")
-            self.enemy_health = self.enemy_health - (self.damage - self.defense)
+            Character.enemy_health = Character.enemy_health - (player.damage - Character.defense)
+
     if command in defence:
         def confuse(self):
             self.player_health = self.player_health + self.damage
-    if command in obtain:
-        self.inventory.append(self.item1)
-        self.inventory.append(self.item2)
-        self.inventory.append(self.item3)
+
+    # if command in obtain:
+    #     def grab:
+    #         inventory.append(item1)
+    #         inventory.append(item2)
+    #         inventory.append(item3)
+
+    if command == inventory:
+        for item in inventory:
+            print("You have " + item.name + "in your inventory")
+
     if command in key:
-        if key in self.inventory:
+        if key in inventory:
             def unlock(self):
                 self.lock1 = False
                 print("You have unlocked the door.")
-        if Torch in self.inventory:
+        if Torch in inventory:
             def unlock(self):
                 self.lock2 = False
                 print("The ice on the door melts.")
-        if GohmaEye in self.inventory:
+        if GohmaEye in inventory:
             def unlock(self):
                 self.lock3 = False
                 print("You have unlocked the box.")
-        if TreeTreasure in self.inventory:
+        if TreeTreasure in inventory:
             def unlock(self):
                 self.lock4 = False
                 print("You have unlocked the door.")
+
+    if player.player_health > player.max_health:
+        player.player_health = player.max_health
+
     if current_node == great_tree_treasures:
         print("You have made it! The treasure is now yours, but beware, it wasn't well protected for no reason")
         exit(0)
