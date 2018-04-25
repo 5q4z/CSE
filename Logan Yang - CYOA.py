@@ -1,9 +1,8 @@
 class Character(object):
-    def __init__(self, name, description, player_health, enemy_health, max_health, attack, defense):
+    def __init__(self, name, description, health, max_health, attack, defense):
         self.name = name
         self.description = description
-        self.player_health = player_health
-        self.enemy_health = enemy_health
+        self.health = health
         self.max_health = max_health
         self.attack = attack
         self.defense = defense
@@ -11,15 +10,15 @@ class Character(object):
     def interact(self):
         print(self.name)
         print(self.description)
-        print(self.enemy_health)
+        print(self.health)
 
     def hit(self):
-        self.enemy_health = self.enemy_health - 1
+        self.health = self.health - 1
         print("You hit the enemy.")
-        print(self.enemy_health)
-        if self.enemy_health == 0:
+        print(self.health)
+        if self.health == 0:
             print("The enemy dies.")
-        elif self.enemy_health < 0:
+        elif self.health < 0:
             print("Your enemy is dead.")
 
     def take_hit(self):
@@ -36,6 +35,11 @@ class Character(object):
 
     def status(self):
         print("%s/%s health left" % (self.player_health, self.max_health))
+
+
+class Enemy(Character):
+    def __init__(self, name, description, health, max_health, attack, defense):
+        super(Enemy, self).__init__(name, description, health, max_health, attack, defense)
 
 
 class Room(object):
@@ -83,7 +87,7 @@ class Sword(Weapon):
 
     def attack(self):
         print("You attack.")
-        self.enemy_health = self.enemy_health - self.damage
+        self.health = self.health - self.damage
 
 
 class Bow(Weapon):
@@ -93,7 +97,7 @@ class Bow(Weapon):
 
     def attack(self):
         print("You shoot the enemy.")
-        self.enemy_health = self.enemy_health - self.damage
+        self.health = self.health - self.damage
 
 
 class Gauntlet(Weapon):
@@ -102,7 +106,7 @@ class Gauntlet(Weapon):
 
     def attack(self):
         print("You attack.")
-        self.enemy_health = self.enemy_health - self.damage
+        self.health = self.health - self.damage
 
 
 class Bomb(Weapon):
@@ -111,7 +115,7 @@ class Bomb(Weapon):
 
     def attack(self):
         print("You throw a bomb at the enemy.")
-        self.enemy_health = self.enemy_health - self.damage
+        self.health = self.health - self.damage
 
 
 class Consumable(Item):
@@ -131,7 +135,7 @@ class HpPotion(Consumable):
 
     def use(self):
         self.use = True
-        self.player_health = self.player_health + 3
+        self.health = self.health + 3
         player.max_health = player.max_health
         self.amount = self.amount - 1
         print("You have used a health potion.")
@@ -305,19 +309,19 @@ obtain = ['take', 'pick up']
 key = ['open', 'use']
 items = ['use potion', 'use item', 'use', 'items']
 status = ['inventory', 'status', 'stats']
-player = Character("You", "It's you, what else do you need to know?", 10, None, 10, 1, 1)
-ogre1 = Character("Ogre", "A big, bad ogre, that is hostile to nearly everything.", None, 10, 10, 3, 3)
-goblin = Character("Goblin", "A small goblin, with no common sense.", None, 5, 5, 1, 0)
-sapling = Character("Sapling", "A small corrupt sapling. It has sharp vines that are dangerous.", None, 8, 8, 5, 1)
-fire = Character("Fire Elemental", "A small, young fire elemental, that hasn't grown enough to be strong. It has small "
-                                   "embers that fly towards its foes.", None, 5, 5, 3, 5)
-ghoul = Character("Ghoul", "A disgusting ghoul, that isn't afraid to attack.", None, 12, 12, 7, 0)
-ice = Character("Ice Elemental", "An ice elemental, and the guardian of the gauntlet. It uses freezing temperatures to "
-                                 "attack its foes.", None, 15, 15, 10, 3)
-troll = Character("Forest Troll", "A forest troll is a troll that lives in the forest. They are usually hostile and "
-                                  "ruthless, especially to human-like beings.", None, 15, 15, 13, 4)
-boss = Character("Gohma", "The guardian of the Tree's Treasure, and the only thing that stand in your way now.", None,
-                 30, 30, 10, 5)
+player = Character("You", "It's you, what else do you need to know?", 10, 10, 1, 1)
+ogre1 = Enemy("Ogre", "A big, bad ogre, that is hostile to nearly everything.", 10, 10, 3, 3)
+goblin = Enemy("Goblin", "A small goblin, with no common sense.", 5, 5, 1, 0)
+sapling = Enemy("Sapling", "A small corrupt sapling. It has sharp vines that are dangerous.", 8, 8, 5, 1)
+fire = Enemy("Fire Elemental", "A small, young fire elemental, that hasn't grown enough to be strong. It has small "
+                               "embers that fly towards its foes.", 5, 5, 3, 5)
+ghoul = Enemy("Ghoul", "A disgusting ghoul, that isn't afraid to attack.", 12, 12, 7, 0)
+ice = Enemy("Ice Elemental", "An ice elemental, and the guardian of the gauntlet. It uses freezing temperatures to "
+                             "attack its foes.", 15, 15, 10, 3)
+troll = Enemy("Forest Troll", "A forest troll is a troll that lives in the forest. They are usually hostile and "
+                              "ruthless, especially to human-like beings.", 15, 15, 13, 4)
+boss = Enemy("Gohma", "The guardian of the Tree's Treasure, and the only thing that stand in your way now.",
+             30, 30, 10, 5)
 sword = Sword("Iron sword", "A durable, iron sword.", 3, None, None)
 gt_sword = Sword("Great Tree Sword", "The weapon of the Great Tree.", 10, TreeTreasure, None)
 bow = Bow("Arcane Bow", "A bow. It's doesn't require arrows, and can shoot without them.", 4, None, None)
@@ -338,7 +342,7 @@ while True:
     print(current_node.description)
     command = input('>_').lower()
 
-    if current_node.enemy == True:
+    if current_node.enemy is True:
         print()
 
     if command == 'quit':
@@ -360,11 +364,10 @@ while True:
     if command in offense:
         def attack():
             print("You attack.")
-            Character.enemy_health = Character.enemy_health - (player.damage - Character.defense)
+            Enemy.health = Enemy.health - (player.damage - player.defense)
 
     if command in defence:
-        def confuse(self):
-            self.player_health = self.player_health + self.damage
+            player.health = player.health + player.damage
 
     # if command in obtain:
     #     def grab:
@@ -372,9 +375,14 @@ while True:
     #         inventory.append(item2)
     #         inventory.append(item3)
 
-    if command == inventory:
+    if command == "inventory":
         for item in inventory:
             print("You have " + item.name + "in your inventory")
+
+    if command == "stats":
+        print("You have " + player.health + "health out of " + player.max_health + ".")
+        print("Your attack is " + player.attack + ".")
+        print("Your defense is " + player.defense + ".")
 
     if command in key:
         if key in inventory:
@@ -394,9 +402,9 @@ while True:
                 self.lock4 = False
                 print("You have unlocked the door.")
 
-    if player.player_health > player.max_health:
-        player.player_health = player.max_health
+    if player.health > player.max_health:
+        player.health = player.max_health
 
     if current_node == great_tree_treasures:
-        print("You have made it! The treasure is now yours, but beware, it wasn't well protected for no reason")
+        print("You've made it! The treasure is now yours, but beware, it wasn't well protected for no reason")
         exit(0)
