@@ -358,8 +358,6 @@ while True:
             current_node.move(command)
         except KeyError:
             print("You can't go that way.")
-    else:
-        print("Command not recognized.")
 
     if command in offense:
         def attack():
@@ -384,23 +382,36 @@ while True:
         print("Your attack is " + player.attack + ".")
         print("Your defense is " + player.defense + ".")
 
+    if command == "help":
+        print("You can move with 'north', 'south,' 'east,' 'west,' 'up,' or 'down'.")
+        print("You can check your inventory by typing 'inventory'.")
+        print("You can check your stats by typing 'stats'.")
+        print("You can use items by typing 'use', and typing which item you want to use.")
+        print("You can attack or defend by typing 'attack' or 'defend'.")
+
     if command in key:
         if key in inventory:
-            def unlock(self):
-                self.lock1 = False
+                Room.lock1 = False
                 print("You have unlocked the door.")
         if Torch in inventory:
-            def unlock(self):
-                self.lock2 = False
+                Room.lock2 = False
                 print("The ice on the door melts.")
         if GohmaEye in inventory:
-            def unlock(self):
-                self.lock3 = False
+                Room.lock3 = False
                 print("You have unlocked the box.")
         if TreeTreasure in inventory:
-            def unlock(self):
-                self.lock4 = False
+                Room.lock4 = False
                 print("You have unlocked the door.")
+
+    if Room.lock1 is True:
+        if current_node == great_tree_treasures:
+            current_node = lair
+            print("You can't go that way without the Key.")
+
+    if Room.lock2 is True:
+        if current_node == frozen_keep:
+            current_node = icy_forest
+            print("You can't go that way without the Torch.")
 
     if player.health > player.max_health:
         player.health = player.max_health
@@ -408,3 +419,6 @@ while True:
     if current_node == great_tree_treasures:
         print("You've made it! The treasure is now yours, but beware, it wasn't well protected for no reason")
         exit(0)
+
+    else:
+        print("Command not recognized.")
