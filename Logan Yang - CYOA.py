@@ -12,10 +12,19 @@ class Character(object):
         print("You attack.")
         enemy.health -= (self.damage - enemy.defense)
 
+    def defend(self, enemy):
+        print("You defend.")
+        
+
     def grab(self):
         inventory.append(current_node.item1)
         inventory.append(current_node.item2)
         inventory.append(current_node.item3)
+
+    def stats(self):
+        print("You have " + str(self.health) + " health out of " + str(self.max_health) + ".")
+        print("Your attack is " + str(self.attack) + ".")
+        print("Your defense is " + str(self.defense) + ".")
 
     def interact(self, enemy):
         print(enemy.name)
@@ -38,8 +47,10 @@ class Character(object):
         if equip in inventory:
             self.attack = self.attack + self.damage
 
-    def status(self):
-        print("%s/%s health left" % (self.health, self.max_health))
+    def pick_up(self):
+        inventory.append.current_node.item1
+        inventory.append.current_node.item2
+        inventory.append.current_node.item3
 
 
 class Enemy(Character):
@@ -190,20 +201,10 @@ class Key(KeyItem):
     def __init__(self):
         super(Key, self).__init__("Key", "A key, it may be used for something, but it's a little rusty.")
 
-    # def unlock(self):
-    #     if Key in self.inventory:
-    #         self.lock1 = False
-    #         print("You have unlocked the door.")
-
 
 class Torch(KeyItem):
     def __init__(self):
         super(Torch, self).__init__("Torch", "A very warm torch, and may be of some use in colder weather.")
-
-    # def unlock(self):
-    #     if Torch in self.inventory:
-    #         self.lock2 = False
-    #         print("The ice on the door melts.")
 
 
 class GohmaEye(KeyItem):
@@ -211,23 +212,11 @@ class GohmaEye(KeyItem):
         super(GohmaEye, self).__init__("Gohma's Eye",
                                        "The eye of the Forest Spider, Gohma, and may hold some hidden treasures.")
 
-    # def unlock(self):
-    #     if GohmaEye in self.inventory:
-    #         self.lock3 = False
-    #         print("You have unlocked the box.")
-
-
 class TreeTreasure(KeyItem):
     def __init__(self):
         super(TreeTreasure, self).__init__("The Great Tree's Amulet",
                                            "The amulet of The Great Tree, and is said to be the creator of the "
                                            "forests. Intense aura emits from the bottom of the amulet.")
-
-    # def unlock(self):
-    #     if TreeTreasure in self.inventory:
-    #         self.lock4 = False
-    #         print("You have unlocked the door.")
-
 
 # Initialize Rooms
 tree_house = Room("Tree House", None, None, None, None, None, "village",
@@ -335,12 +324,16 @@ f_gauntlet = Gauntlet("Fire Gauntlet", "The gauntlet, infused with the element o
 bomb = Bomb("Ivy Bomb", "A bomb, infused with the essence of nature. It regrows easily, which means it will come "
                         "back after using it.", 8, None, None)
 inventory = []
-healthpotion = HpPotion
-atkpotion = AtkPotion
-defpotion = DefPotion
-heartcontainer = HeartContainer
+health_potion = HpPotion
+atk_potion = AtkPotion
+def_potion = DefPotion
+heart_container = HeartContainer
+key0 = Key
+eye = GohmaEye
+torch0 = Torch
 treasures = TreeTreasure
 current_node = tree_house
+empty = True
 player_hp = 10
 while True:
     print(current_node.name)
@@ -376,15 +369,20 @@ while True:
     if command == "inventory":
         for Item in inventory:
             print("You have " + Item.name + "in your inventory.")
+        if empty is True:
+            print("You have nothing in your inventory.")
+
+    if command == "pick up":
+        empty = False
+        player.pick_up()
 
     if command == "stats":
-        print("You have " + player.health + "health out of " + player.max_health + ".")
-        print("Your attack is " + player.attack + ".")
-        print("Your defense is " + player.defense + ".")
+        player.stats()
 
     if command == "help":
         print("You can move with 'north', 'south,' 'east,' 'west,' 'up,' or 'down' or the first letter of each "
               "direction.")
+        print("You can pick up items, if there are any, by typing 'pick up'.")
         print("You can check your inventory by typing 'inventory'.")
         print("You can check your stats by typing 'stats'.")
         print("You can use items by typing 'use', and typing which item you want to use.")
@@ -414,8 +412,11 @@ while True:
             current_node = icy_forest
             print("You can't go that way without the Torch.")
 
-    if current_node.lock3 is True:
-        inventory.append.
+    if current_node.lock3 is False:
+        inventory.append.key0
+
+    if boss.health == 0:
+        inventory.append.gohmaeye0
 
     if player.health > player.max_health:
         player.health = player.max_health
