@@ -12,10 +12,6 @@ class Character(object):
         print("You attack.")
         enemy.health -= (self.damage - enemy.defense)
 
-    def defend(self, enemy):
-        print("You defend.")
-        
-
     def grab(self):
         inventory.append(current_node.item1)
         inventory.append(current_node.item2)
@@ -25,6 +21,9 @@ class Character(object):
         print("You have " + str(self.health) + " health out of " + str(self.max_health) + ".")
         print("Your attack is " + str(self.attack) + ".")
         print("Your defense is " + str(self.defense) + ".")
+
+    def unlock(self):
+        inventory.append.key0
 
     def interact(self, enemy):
         print(enemy.name)
@@ -46,12 +45,6 @@ class Character(object):
         equip = input("What do you want to equip? ")
         if equip in inventory:
             self.attack = self.attack + self.damage
-
-    def pick_up(self):
-        inventory.append.current_node.item1
-        inventory.append.current_node.item2
-        inventory.append.current_node.item3
-
 
 class Enemy(Character):
     def __init__(self, name, description, health, max_health, attack, defense, damage):
@@ -367,14 +360,14 @@ while True:
         player.health = player.health + current_node.enemy.attack
 
     if command == "inventory":
-        for Item in inventory:
-            print("You have " + Item.name + "in your inventory.")
         if empty is True:
             print("You have nothing in your inventory.")
+        else:
+            for Item in inventory:
+                print("You have " + Item.name + "in your inventory.")
 
     if command == "pick up":
-        empty = False
-        player.pick_up()
+        player.grab()
 
     if command == "stats":
         player.stats()
@@ -387,15 +380,19 @@ while True:
         print("You can check your stats by typing 'stats'.")
         print("You can use items by typing 'use', and typing which item you want to use.")
         print("You can attack or defend by typing 'attack' or 'defend'.")
+        print("You can check the enemy by typing 'enemy'.")
+
+    if command == "enemy":
+        player.interact(current_node.enemy)
 
     if command in key:
-        if key in inventory:
+        if key0 in inventory:
                 current_node.lock1 = False
                 print("You have unlocked the door.")
-        if Torch in inventory:
+        if torch0 in inventory:
                 current_node.lock2 = False
                 print("The ice on the door melts.")
-        if GohmaEye in inventory:
+        if eye in inventory:
                 current_node.lock3 = False
                 print("You have unlocked the box.")
         if TreeTreasure in inventory:
@@ -413,14 +410,21 @@ while True:
             print("You can't go that way without the Torch.")
 
     if current_node.lock3 is False:
-        inventory.append.key0
+        player.unlock()
 
     if boss.health == 0:
-        inventory.append.gohmaeye0
+        print("You have defeated the Forest Spider, Gohma, and have now acquired it's eye, which is said to unlock the "
+              "secrets of the Great Tree")
+        inventory.append.eye
 
     if player.health > player.max_health:
         player.health = player.max_health
 
     if current_node == great_tree_treasures:
+        print("You've made it! The treasure is now yours, but beware, it wasn't well protected for no reason...")
+        quit(0)
+
+    if command == "up up down down left right left right b a start":
+        current_node = great_tree_treasures
         print("You've made it! The treasure is now yours, but beware, it wasn't well protected for no reason...")
         quit(0)
