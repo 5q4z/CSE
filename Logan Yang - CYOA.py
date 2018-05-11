@@ -8,9 +8,14 @@ class Character(object):
         self.defense = defense
         self.damage = damage
 
-    def attack(self, enemy):
-        print("You attack.")
-        enemy.health -= (self.damage - enemy.defense)
+    def fight(self, enemy):
+        while enemy.health != 0:
+            print("You attack.")
+            enemy.health -= (self.damage - enemy.defense)
+        if enemy.health == 0:
+            print("The enemy is already dead, there is nothing else for you to fight.")
+        if enemy is False:
+            print("There are no enemies in this room.")
 
     def grab(self):
         inventory.append(current_node.item1)
@@ -24,6 +29,7 @@ class Character(object):
 
     def unlock(self):
         inventory.append.key0
+        print("You have obtained a key. It contains the power of the Forest People, your ancestors.")
 
     def interact(self, enemy):
         print(enemy.name)
@@ -327,6 +333,7 @@ torch0 = Torch
 treasures = TreeTreasure
 current_node = tree_house
 empty = True
+move = True
 player_hp = 10
 while True:
     print(current_node.name)
@@ -354,20 +361,64 @@ while True:
         print("Command not recognized.")
 
     if command in offense:
-        player.attack(current_node.enemy)
+        player.fight(current_node.enemy)
 
     if command in defence:
         player.health = player.health + current_node.enemy.attack
+
+    if command == "use":
+        command = input("What do you want to use?")
+        if command == "health potion":
+            if Item.amount == 0:
+                print("You don't have any more health potions.")
+            elif player.health != player.max_health:
+                print("You already have full health.")
+            else:
+                player.health = player.health + 5
+                player.max_health = player.max_health
+                Item.amount = Item.amount - 1
+                print("You have used a health potion.")
+            if Item.amount == 0:
+                print("You ran out of health potions.")
+        if command == "attack potion":
+            if Item.amount == 0:
+                print("You don't have any more health potions.")
+            else:
+                player.attack = player.attack + 3
+                Item.amount = Item.amount - 1
+                print("You have used an attack potion.")
+                if Item.amount == 0:
+                    print("You ran out of attack potions.")
+        if command == "defense potion":
+            if Item.amount == 0:
+                print("You don't have any more health potions.")
+            else:
+                player.defense = player.defense + 3
+                Item.amount = Item.amount - 1
+                print("You have used a defense potion.")
+                if Item.amount == 0:
+                    print("You ran out of defense potions.")
+        if command == "heart container":
+            if Item.amount == 0:
+                print("You don't have any more health potions.")
+            else:
+                player.max_health = player.max_health
+                player.health = player.max_health
+                Item.amount = Item.amount - 1
+                print("You have used a heart container.")
+                if Item.amount == 0:
+                    print("You ran out of heart containers.")
 
     if command == "inventory":
         if empty is True:
             print("You have nothing in your inventory.")
         else:
             for Item in inventory:
-                print("You have " + Item.name + "in your inventory.")
+                print(Item.name)
 
     if command == "pick up":
         player.grab()
+        empty = False
 
     if command == "stats":
         player.stats()
@@ -412,13 +463,24 @@ while True:
     if current_node.lock3 is False:
         player.unlock()
 
+    if current_node.enemy == True:
+        if current_node.enemy.health == 0:
+            move = True
+        elif current_node.enemy.health > 0:
+            move = False
+
     if boss.health == 0:
         print("You have defeated the Forest Spider, Gohma, and have now acquired it's eye, which is said to unlock the "
               "secrets of the Great Tree")
-        inventory.append.eye
+        inventory.append.Item.eye
 
     if player.health > player.max_health:
         player.health = player.max_health
+
+    if player.health == 0:
+        print("You have died..."
+              "GAME OVER")
+        quit()
 
     if current_node == great_tree_treasures:
         print("You've made it! The treasure is now yours, but beware, it wasn't well protected for no reason...")
