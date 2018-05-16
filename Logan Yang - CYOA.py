@@ -20,10 +20,13 @@ class Character(object):
     def grab(self):
         if current_node.item1 is not None:
             inventory.append(current_node.item1)
+            Item.amount = Item.amount + 1
         if current_node.item2 is not None:
             inventory.append(current_node.item2)
+            Item.amount = Item.amount + 1
         if current_node.item3 is not None:
             inventory.append(current_node.item3)
+            Item.amount = Item.amount + 1
 
     def stats(self):
         print("You have " + str(self.health) + " health out of " + str(self.max_health) + ".")
@@ -31,8 +34,9 @@ class Character(object):
         print("Your defense is " + str(self.defense) + ".")
 
     def unlock(self):
-        inventory.append.key0
-        print("You have obtained a key. It contains the power of your ancestors.")
+        print("In the box is a key. This isn;t a regular key, and it is accompanied with a note.")
+        print("The note reads 'This key now belongs to you, the only one whom could defeat the forest spider, Gohma,"
+              "and successfully open the box. Now take the key, and save the forests!'")
 
     def interact(self, enemy):
         print(enemy.name)
@@ -86,14 +90,15 @@ class Room(object):
 
 
 class Item(object):
-    def __init__(self, name, description):
+    def __init__(self, name, description, amount):
         self.name = name
         self.description = description
+        self.amount = int(amount)
 
 
 class Weapon(Item):
     def __init__(self, name, description, damage, ability, attack_type):
-        super(Weapon, self).__init__(name, description)
+        super(Weapon, self).__init__(name, description, 0)
         self.damage = damage
         self.ability = ability
         self.attack_type = attack_type
@@ -138,10 +143,10 @@ class Bomb(Weapon):
 
 
 class Consumable(Item):
-    def __init__(self, name, description):
-        super(Consumable, self).__init__(name, description)
+    def __init__(self, name, description, amount):
+        super(Consumable, self).__init__(name, description, 0)
         self.use = False
-        self.amount = 0
+        self.amount = int(amount)
 
     def obtain(self):
         self.amount = self.amount + 1
@@ -150,7 +155,7 @@ class Consumable(Item):
 
 class HpPotion(Consumable):
     def __init__(self):
-        super(HpPotion, self).__init__("Healing Potion", "A potion the will restore 3 HP.")
+        super(HpPotion, self).__init__("Healing Potion", "A potion the will restore 3 HP.", 0)
 
     def use(self, player):
         self.use = True
@@ -165,7 +170,7 @@ class HpPotion(Consumable):
 class HeartContainer(Consumable):
     def __init__(self):
         super(HeartContainer, self).__init__("Heart Container",
-                                             "A heart container, which permanently increases your maximum health.")
+                                             "A heart container, which permanently increases your maximum health.", 0)
 
     def use(self):
         self.use = True
@@ -176,7 +181,7 @@ class HeartContainer(Consumable):
 
 class AtkPotion(Consumable):
     def __init__(self):
-        super(AtkPotion, self).__init__("Attack Potion", "A potion that permanently increases your attack by one.")
+        super(AtkPotion, self).__init__("Attack Potion", "A potion that permanently increases your attack by one.", 0)
 
     def use(self):
         self.use = True
@@ -187,7 +192,7 @@ class AtkPotion(Consumable):
 class DefPotion(Consumable):
     def __init__(self):
         super(DefPotion, self).__init__("Defense Potion",
-                                        "A potion that permanently decreases the damage you receive by one.")
+                                        "A potion that permanently decreases the damage you receive by one.", 0)
 
     def use(self):
         self.use = True
@@ -197,7 +202,7 @@ class DefPotion(Consumable):
 
 class KeyItem(Item):
     def __init__(self, name, description):
-        super(KeyItem, self).__init__(name, description)
+        super(KeyItem, self).__init__(name, description, 0)
 
 
 class Key(KeyItem):
@@ -288,7 +293,7 @@ storage = Room("Storage", "torch", None, "fort", None, None, None,
                "light coming through it.", None, None, None, None)
 torch = Room("Mystic", None, "storage", None, None, None, None,
              "A magical torch is held in the center of the room, and it seems to be up for grabs! The only exit is "
-             "where you came from.", Torch, Bow, heart_container, fire)
+             "where you came from.", torch0, Bow, heart_container, fire)
 dark_cave = Room("Dark Cave", None, "forest", "ogre", "gt_entrance", None, None,
                  "You cannot see anything, and should use a light source to light up the room. There are exits "
                  "to the east and west.", None, None, None, None)
@@ -322,7 +327,7 @@ lair = Room("Gohma's Lair", "great_tree_treasures", None, None, None, "tree_hous
             "The last thing that stands between you and the forest treasure is the forest spider, 'Gohma'. "
             "Retrieve it's eye, and you may be able to open the lock, and get to the treasure. The treasure "
             "room is locked with a keyhole to the north. A mysterious hole is above you, and a ladder drops from "
-            "the hole, enter, at your own risk.", "eye", heart_container, None, boss)
+            "the hole, enter, at your own risk.", heart_container, None, None, boss)
 great_tree_treasures = Room("Great Tree Treasure Room", None, "lair", None, None, None, None,
                             "In front of you lies the Great Tree's Treasure, the Amulet of the Forest Spirit. It is "
                             "now yours to keep, but beware, it may bring an evil curse with it...", TreeTreasure,
@@ -336,9 +341,7 @@ obtain = ['take', 'pick up']
 key = ['open', 'use']
 items = ['use potion', 'use item', 'use', 'items']
 status = ['inventory', 'status', 'stats']
-
 inventory = []
-
 current_node = tree_house
 empty = True
 move = True
@@ -350,7 +353,8 @@ while True:
     command = input('>_').lower()
 
     if current_node.enemy is True:
-        print()
+        print("There is an enemy in your area!")
+        print("You can't escape until the enemy been defeated!")
 
     if command == 'quit':
         quit(0)
@@ -505,9 +509,10 @@ while True:
             move = False
 
     elif boss.health == 0:
-        print("You have defeated the Forest Spider, Gohma, and have now acquired it's eye, which is said to unlock the "
-              "secrets of the Great Tree.")
-        inventory.append.Item.eye
+        print("You have defeated the Forest Spider, Gohma, and have now acquired it's eye, which is rumored to unlock "
+              "the secrets of the Great Tree.")
+        print("Pick up the eye from Gohma.")
+        eye = lair.item3
 
     elif player.health > player.max_health:
         player.health = player.max_health
