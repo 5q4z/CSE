@@ -1,3 +1,9 @@
+class Item(object):
+    def __init__(self, name, description, amount):
+        self.name = name
+        self.description = description
+        self.amount = int(amount)
+
 class Character(object):
     def __init__(self, name, description, health, max_health, attack, defense, damage):
         self.name = name
@@ -20,18 +26,15 @@ class Character(object):
     def grab(self):
         if current_node.item1 is not None:
             inventory.append(current_node.item1)
-            Item.amount = Item.amount + 1
         if current_node.item2 is not None:
             inventory.append(current_node.item2)
-            Item.amount = Item.amount + 1
         if current_node.item3 is not None:
             inventory.append(current_node.item3)
-            Item.amount = Item.amount + 1
 
     def stats(self):
-        print("You have " + str(self.health) + " health out of " + str(self.max_health) + ".")
-        print("Your attack is " + str(self.attack) + ".")
-        print("Your defense is " + str(self.defense) + ".")
+        print("You have " + str(player.health) + " health out of " + str(player.max_health) + ".")
+        print("Your attack is " + str(player.attack) + ".")
+        print("Your defense is " + str(player.defense) + ".")
 
     def unlock(self):
         print("In the box is a key. This isn;t a regular key, and it is accompanied with a note.")
@@ -88,12 +91,7 @@ class Room(object):
         global current_node
         current_node = globals()[getattr(self, direction)]
 
-
-class Item(object):
-    def __init__(self, name, description, amount):
-        self.name = name
-        self.description = description
-        self.amount = int(amount)
+# Items
 
 
 class Weapon(Item):
@@ -261,14 +259,14 @@ tree_house = Room("Tree House", None, None, None, None, None, "village",
                   "You have lived in this house your entire life. You still have your locked box that is stuck to the "
                   "wall. It seems to have a socket for a ball. You can climb down to the village.",
                   health_potion, heart_container, None, None)
-village = Room("Village", "north_village", "south_village", "shop", None, "tree_house", None,
+village = Room("Village", "north_village", "south_village", None, "shop", "tree_house", None,
                "The village is deserted now, and you area the only one left. The old man's shop lies to the west, and "
                "there is a clearing to the north. The exit to the village is south.",
                None, None, None, None)
-shop = Room("Old Man's Shop", "north_village", None, None, "village", None, None,
+shop = Room("Old Man's Shop", "north_village", None, "village", None, None, None,
             "An old wooden plank is on the ground, and it seems to serve no use, but it may come in handy. There are "
             "two exits to the north and the west.", atk_potion, def_potion, health_potion, None,)
-north_village = Room("North of Village", None, "village", "shop", None, None, None,
+north_village = Room("North of Village", None, "village", None, "shop", None, None,
                      "The north of the village. It's nice and clear, but not much else.", None, None, None, None,)
 south_village = Room("South of Village", "village", "lost_forest", None, None, None, None,
                      "The south of the village. There is a small hole to the south, and the locked gate to the west.",
@@ -347,10 +345,19 @@ empty = True
 move = True
 player_hp = 10
 weapon = None
+
 while True:
     print(current_node.name)
     print(current_node.description)
     command = input('>_').lower()
+    for health_potion in inventory:
+        health_potion.amount = health_potion.amount + 1
+    for atk_potion in inventory:
+        atk_potion.amount = atk_potion.amount + 1
+    for def_potion in inventory:
+        def_potion.amount = def_potion.amount + 1
+    for heart_container in inventory:
+        heart_container.amount = heart_container.amount + 1
 
     if current_node.enemy is True:
         print("There is an enemy in your area!")
@@ -376,48 +383,54 @@ while True:
     elif command in defence:
         player.health = player.health + current_node.enemy.attack
 
-    elif command == "health potion":
-        if Item.amount == 0:
+    elif command in ["health potion", "heal"]:
+        if health_potion.amount == 0:
             print("You don't have any health potions.")
-        elif player.health != player.max_health:
+        elif player.health == player.max_health:
             print("You already have full health.")
         else:
             player.health = player.health + 5
             player.max_health = player.max_health
-            Item.amount = Item.amount - 1
+            health_potion.amount = health_potion.amount - 1
             print("You have used a health potion.")
-        if Item.amount == 0:
-            print("You ran out of health potions.")
+            if health_potion.amount == 0:
+                print("You ran out of health potions.")
+        for health_potion in inventory:
+            health_potion.amount = health_potion.amount + 1
 
     elif command == "attack potion":
-        if Item.amount == 0:
+        if atk_potion.amount == 0:
             print("You don't have any attack potions.")
         else:
             player.attack = player.attack + 3
-            Item.amount = Item.amount - 1
+            atk_potion.amount = atk_potion.amount - 1
             print("You have used an attack potion.")
-            if Item.amount == 0:
+            if atk_potion.amount == 0:
                 print("You ran out of attack potions.")
+        for atk_potion in inventory:
+            atk_potion.amount = atk_potion.amount + 1
 
     elif command == "defense potion":
-        if Item.amount == 0:
+        if def_potion.amount == 0:
             print("You don't have any defense potions.")
         else:
             player.defense = player.defense + 3
-            Item.amount = Item.amount - 1
+            def_potion.amount = def_potion.amount - 1
             print("You have used a defense potion.")
-            if Item.amount == 0:
+            if def_potion.amount == 0:
                 print("You ran out of defense potions.")
+        for def_potion in inventory:
+            def_potion.amount = def_potion.amount + 1
 
     elif command == "heart container":
-        if Item.amount == 0:
+        if heart_container.amount == 0:
             print("You don't have any heart containers.")
         else:
             player.max_health = player.max_health
             player.health = player.max_health
-            Item.amount = Item.amount - 1
+            heart_container.amount = heart_container.amount - 1
             print("You have used a heart container.")
-            if Item.amount == 0:
+            if heart_container.amount == 0:
                 print("You ran out of heart containers.")
 
     elif command == "sword":
@@ -527,7 +540,6 @@ while True:
         quit(0)
 
     elif command == "up up down down left right left right b a start":
-        current_node = great_tree_treasures
         print("Why are you trying to use cheat codes?")
         print("GAME OVER")
         quit()
