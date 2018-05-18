@@ -15,25 +15,35 @@ class Character(object):
         self.damage = self.attack + damage
 
     def fight(self, enemy):
-        while enemy.health != 0:
+        while current_node.enemy.health != 0:
             print("You attack.")
-            enemy.health -= (self.damage - enemy.defense)
-        if enemy.health == 0:
+            current_node.enemy.health = (player.damage - current_node.enemy.defense)
+        if current_node.enemy.health == 0:
             print("The enemy is already dead, there is nothing else for you to fight.")
-        if enemy is False:
+        if current_node.enemy is None:
             print("There are no enemies in this room.")
+
+    def take_damage(self, enemy):
+        while player.health != 0:
+            print("The enemy attacks you.")
+            player.health = (current_node.enemy.attack - player.defense)
+            print("You lost " + current_node.enemy.attack + " health!")
 
     def grab(self):
         if current_node.item1 is not None:
             inventory.append(current_node.item1)
+            current_node.item1 = None
         if current_node.item2 is not None:
             inventory.append(current_node.item2)
+            current_node.item2 = None
         if current_node.item3 is not None:
             inventory.append(current_node.item3)
+            current_node.item3 = None
 
     def stats(self):
         print("You have " + str(player.health) + " health out of " + str(player.max_health) + ".")
-        print("Your attack is " + str(player.attack) + ".")
+        print("Your attack is " + str(player.attack) + " and your weapon has " + str(player.damage) + " you total is" +
+              str(player.damage + player.attack) + ".")
         print("Your defense is " + str(player.defense) + ".")
 
     def unlock(self):
@@ -42,20 +52,11 @@ class Character(object):
               "and successfully open the box. Now take the key, and save the forests!'")
 
     def interact(self, enemy):
-        print(enemy.name)
-        print(enemy.description)
-        print(enemy.health)
-        print(enemy.attack)
-        print(enemy.defense)
-
-    def hit(self):
-        self.health = self.health - 1
-        print("You hit the enemy.")
-        print(self.health)
-        if self.health == 0:
-            print("The enemy dies.")
-        elif self.health < 0:
-            print("Your enemy is dead.")
+        print("The enemy's name is " + current_node.enemy.name + ".")
+        print(current_node.enemy.description)
+        print("The enemy has " + current_node.enemy.health + " health.")
+        print("The enemy has " + current_node.enemy.attack + " attack.")
+        print("The enemy has " + current_node.enemy.defense + " defense")
 
     def equip(self):
         equip = input("What do you want to equip? ")
@@ -155,7 +156,7 @@ class HpPotion(Consumable):
     def __init__(self):
         super(HpPotion, self).__init__("Healing Potion", "A potion the will restore 3 HP.", 0)
 
-    def use(self, player):
+    def use(self):
         self.use = True
         player.health = player.health + 3
         player.max_health = player.max_health
@@ -379,6 +380,7 @@ while True:
 
     elif command in offense:
         player.fight(current_node.enemy)
+        player.take_damage(player)
 
     elif command in defence:
         player.health = player.health + current_node.enemy.attack
@@ -426,14 +428,14 @@ while True:
         if heart_container.amount == 0:
             print("You don't have any heart containers.")
         else:
-            player.max_health = player.max_health
+            player.max_health = player.max_health + 5
             player.health = player.max_health
             heart_container.amount = heart_container.amount - 1
             print("You have used a heart container.")
             if heart_container.amount == 0:
                 print("You ran out of heart containers.")
 
-    elif command == "sword":
+    elif command in ["sword", "iron sword"]:
         weapon = sword
         player.damage = player.damage + sword.damage
         print("You have the 'Sword' equipped.")
@@ -443,12 +445,12 @@ while True:
         player.damage = player.damage + sword.damage
         print("You have the 'Great Tree Sword' equipped.")
 
-    elif command == "bow":
+    elif command in ["bow", "magic bow"]:
         weapon = bow
         player.damage = player.damage + bow.damage
         print("You have the 'Magic Bow' equipped.")
 
-    elif command == "bomb":
+    elif command in ["bomb", "ivy bomb"]:
         weapon = bomb
         player.damage = player.damage + bomb.damage
         print("You have the 'Ivy Bomb' equipped.")
@@ -546,3 +548,6 @@ while True:
 
     else:
         print("Command not recognized.")
+
+    print("___________________________________________________________________________________________________________"
+          "___________________________________________________________________________________________________________")
